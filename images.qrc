@@ -1,0 +1,16 @@
+<RCC>
+    <qresource prefix="/graphics">
+        <file>graphics/background.png</file>
+        <file>graphics/bNew.png</file>
+        <file>graphics/quit.png</file>
+        <file>graphics/settings.png</file>
+        <file>graphics/stats.png</file>
+        <file>graphics/total.png</file>
+        <file>graphics/Group 14.png</file>
+        <file>graphics/Union 2.png</file>
+        <file>graphics/bNewW.png</file>
+        <file>graphics/quitW.png</file>
+        <file>graphics/settingsW.png</file>
+        <file>graphics/statsW.png</file>
+    </qresource>
+</RCC>

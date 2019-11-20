@@ -5,6 +5,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    this->setWindowFlags(Qt::CustomizeWindowHint);
+    setFixedSize(902, 542);
     ui->setupUi(this);
 }
 
