@@ -57,8 +57,21 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-image: url(:/graphics/graphics/quit.png);
-background-color: rgba(255, 255, 255, 0);</string>
+     <string notr="true">QPushButton#bClose
+{
+	background-image: url(:/graphics/graphics/quit.png);
+	background-color: rgba(255, 255, 255, 0);
+}
+QPushButton:hover#bClose
+{
+	background-image: url(:/graphics/graphics/quitW.png);
+	background-color: rgba(255, 255, 255, 0);
+}
+QPushButton:pressed#bClose
+{
+	background-image: url(:/graphics/graphics/quitW.png);
+	background-color: rgba(255, 255, 255, 0);
+}</string>
     </property>
     <property name="text">
      <string/>
@@ -77,8 +90,21 @@ background-color: rgba(255, 255, 255, 0);</string>
      <bool>false</bool>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-image: url(:/graphics/graphics/settings.png);
-background-color: rgba(255, 255, 255, 0);</string>
+     <string notr="true">QPushButton#bSettings
+{
+	background-image: url(:/graphics/graphics/settings.png);
+	background-color: rgba(255, 255, 255, 0);
+}
+QPushButton:hover#bSettings
+{
+	background-image: url(:/graphics/graphics/settingsW.png);
+	background-color: rgba(255, 255, 255, 0);
+}
+QPushButton:pressed#bSettings
+{
+	background-image: url(:/graphics/graphics/settingsW.png);
+	background-color: rgba(255, 255, 255, 0);
+}</string>
     </property>
     <property name="text">
      <string/>
@@ -94,8 +120,21 @@ background-color: rgba(255, 255, 255, 0);</string>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgba(255, 255, 255, 0);
-background-image: url(:/graphics/graphics/stats.png);</string>
+     <string notr="true">QPushButton#bStats
+{
+	background-color: rgba(255, 255, 255, 0);
+	background-image: url(:/graphics/graphics/stats.png);
+}
+QPushButton:hover#bStats
+{
+	background-color: rgba(255, 255, 255, 0);
+	background-image: url(:/graphics/graphics/statsW.png);
+}
+QPushButton:pressed#bStats
+{
+	background-color: rgba(255, 255, 255, 0);
+	background-image: url(:/graphics/graphics/statsW.png);
+}</string>
     </property>
     <property name="text">
      <string/>
@@ -115,11 +154,11 @@ background-image: url(:/graphics/graphics/stats.png);</string>
 	background-image: url(:/graphics/graphics/bNew.png);
 	background-color: rgba(255, 255, 255, 0);
 }
-QPushButton#bAdd :hover{	
+QPushButton:hover#bAdd{	
 	background-image: url(:/graphics/graphics/bNewW.png);
 	background-color: rgba(255, 255, 255, 0);
 }
-QPushButton#bAdd :pressed{	
+QPushButton:pressed#bAdd{	
 	background-image: url(:/graphics/graphics/bNewW.png);
 	background-color: rgba(255, 255, 255, 0);
 }
