@@ -12,5 +12,7 @@
         <file>graphics/quitW.png</file>
         <file>graphics/settingsW.png</file>
         <file>graphics/statsW.png</file>
+        <file>graphics/bAdd.png</file>
+        <file>graphics/bAddW.png</file>
     </qresource>
 </RCC>

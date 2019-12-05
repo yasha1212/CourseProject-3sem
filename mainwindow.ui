@@ -144,28 +144,37 @@ QPushButton:pressed#bStats
     <property name="geometry">
      <rect>
       <x>310</x>
-      <y>480</y>
-      <width>151</width>
-      <height>51</height>
+      <y>500</y>
+      <width>130</width>
+      <height>31</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Leelawadee UI</family>
+      <pointsize>12</pointsize>
+     </font>
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton#bAdd {	
-	background-image: url(:/graphics/graphics/bNew.png);
+	color: rgb(112, 112, 112);
+	background-image: url(:/graphics/graphics/bAdd.png);
 	background-color: rgba(255, 255, 255, 0);
 }
-QPushButton:hover#bAdd{	
-	background-image: url(:/graphics/graphics/bNewW.png);
+QPushButton:hover#bAdd{		
+	color: rgb(112, 112, 112);
+	background-image: url(:/graphics/graphics/bAddW.png);
 	background-color: rgba(255, 255, 255, 0);
 }
 QPushButton:pressed#bAdd{	
-	background-image: url(:/graphics/graphics/bNewW.png);
+	color: rgb(112, 112, 112);
+	background-image: url(:/graphics/graphics/bAddW.png);
 	background-color: rgba(255, 255, 255, 0);
 }
 </string>
     </property>
     <property name="text">
-     <string/>
+     <string>Add</string>
     </property>
    </widget>
    <widget class="QLabel" name="laTotal">
@@ -193,6 +202,63 @@ color: rgb(112, 112, 112);</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QListView" name="list">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>301</width>
+      <height>543</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Leelawadee UI</family>
+      <pointsize>18</pointsize>
+     </font>
+    </property>
+    <property name="autoFillBackground">
+     <bool>true</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(112, 112, 112);
+</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::NoFrame</enum>
+    </property>
+    <property name="verticalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOff</enum>
+    </property>
+    <property name="horizontalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOff</enum>
+    </property>
+    <property name="sizeAdjustPolicy">
+     <enum>QAbstractScrollArea::AdjustIgnored</enum>
+    </property>
+    <property name="editTriggers">
+     <set>QAbstractItemView::NoEditTriggers</set>
+    </property>
+    <property name="alternatingRowColors">
+     <bool>false</bool>
+    </property>
+    <property name="textElideMode">
+     <enum>Qt::ElideRight</enum>
+    </property>
+    <property name="resizeMode">
+     <enum>QListView::Fixed</enum>
+    </property>
+    <property name="spacing">
+     <number>0</number>
+    </property>
+    <property name="viewMode">
+     <enum>QListView::ListMode</enum>
+    </property>
+    <property name="wordWrap">
+     <bool>false</bool>
     </property>
    </widget>
   </widget>
