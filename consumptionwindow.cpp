@@ -1,13 +1,13 @@
-#include "incomewindow.h"
-#include "ui_incomewindow.h"
+#include "consumptionwindow.h"
+#include "ui_consumptionwindow.h"
 #include <QSqlQuery>
 #include <QDateTime>
 #include <QMessageBox>
 #include <QLocale>
 
-IncomeWindow::IncomeWindow(QWidget *parent) :
+ConsumptionWindow::ConsumptionWindow(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::IncomeWindow)
+    ui(new Ui::ConsumptionWindow)
 {
     ui->setupUi(this);
     ui->categories->addItem("Clothes");
@@ -25,24 +25,31 @@ IncomeWindow::IncomeWindow(QWidget *parent) :
     ui->categories->addItem("Entertainment");
 }
 
-void IncomeWindow::showEvent(QShowEvent *event)
+void ConsumptionWindow::showEvent(QShowEvent *event)
 {
     ui->value->setSuffix(" " + currency);
     event->accept();
 }
 
-IncomeWindow::~IncomeWindow()
+ConsumptionWindow::~ConsumptionWindow()
 {
     delete ui;
 }
 
-void IncomeWindow::addIncome()
+void ConsumptionWindow::closeEvent(QCloseEvent *event)
+{
+    emit walletWindow();
+    event->accept();
+    ui->value->clear();
+}
+
+void ConsumptionWindow::addConsumption()
 {
     QSqlQuery query(QSqlDatabase::database("transactions_connection"));
     query.prepare("INSERT INTO transactions(id, type, value, currency, date, category)"
                   "VALUES (:id, :type, :value, :currency, :date, :category)");
     query.bindValue(":id", id);
-    query.bindValue(":type", "income");
+    query.bindValue(":type", "consumption");
     QString sign = ui->value->value() < 0? "": "+";
     query.bindValue(":value", sign + QString::number(ui->value->value()));
     query.bindValue(":currency", currency);
@@ -62,20 +69,13 @@ void IncomeWindow::addIncome()
     queryUpdate.exec();
 }
 
-void IncomeWindow::closeEvent(QCloseEvent *event)
-{
-    emit walletWindow();
-    event->accept();
-    ui->value->clear();
-}
-
-void IncomeWindow::on_bAdd_clicked()
+void ConsumptionWindow::on_bAdd_clicked()
 {
     if(ui->categories->currentText().count() != 0)
     {
         if(ui->value->value() != 0)
         {
-            addIncome();
+            addConsumption();
             this->close();
         }
         else

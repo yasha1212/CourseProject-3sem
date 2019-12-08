@@ -1,5 +1,5 @@
-#ifndef INCOMEWINDOW_H
-#define INCOMEWINDOW_H
+#ifndef CONSUMPTIONWINDOW_H
+#define CONSUMPTIONWINDOW_H
 
 #include <QWidget>
 #include <QCloseEvent>
@@ -8,16 +8,16 @@
 #define DATE_FORMAT "d MMMM yyyy, hh:mm:ss"
 
 namespace Ui {
-class IncomeWindow;
+class ConsumptionWindow;
 }
 
-class IncomeWindow : public QWidget
+class ConsumptionWindow : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit IncomeWindow(QWidget *parent = 0);
-    ~IncomeWindow();
+    explicit ConsumptionWindow(QWidget *parent = 0);
+    ~ConsumptionWindow();
     QString currency;
     QString id;
     QString value;
@@ -29,10 +29,10 @@ private slots:
     void on_bAdd_clicked();
 
 private:
-    Ui::IncomeWindow *ui;
+    Ui::ConsumptionWindow *ui;
     void closeEvent(QCloseEvent *event);
-    void addIncome();
+    void addConsumption();
     void showEvent(QShowEvent *event);
 };
 
-#endif // INCOMEWINDOW_H
+#endif // CONSUMPTIONWINDOW_H

@@ -12,8 +12,11 @@ WalletWindow::WalletWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     incomeWindow = new IncomeWindow;
+    consumptionWindow = new ConsumptionWindow;
     connect(incomeWindow, &IncomeWindow::walletWindow, this, &WalletWindow::show);
     connect(incomeWindow, &IncomeWindow::walletWindow, this, &WalletWindow::prepareDatabase);
+    connect(consumptionWindow, &ConsumptionWindow::walletWindow, this, &WalletWindow::show);
+    connect(consumptionWindow, &ConsumptionWindow::walletWindow, this, &WalletWindow::prepareDatabase);
 }
 
 void WalletWindow::prepareDatabase()
@@ -87,14 +90,18 @@ void WalletWindow::on_bSettings_clicked()
 
 void WalletWindow::on_bConsumption_clicked()
 {
-    QMessageBox::information(0, APP_NAME, "Consumption button was pressed!");
+    consumptionWindow->currency = currency;
+    consumptionWindow->id = name;
+    consumptionWindow->value = value;
+    consumptionWindow->show();
+    this->hide();
 }
 
 void WalletWindow::on_bIncome_clicked()
 {
-    incomeWindow->show();
     incomeWindow->currency = currency;
     incomeWindow->id = name;
     incomeWindow->value = value;
+    incomeWindow->show();
     this->hide();
 }

@@ -43,7 +43,7 @@ double convertToDollar(double value, QString currency)
     if(currency == "USD")
         return value;
     if(currency == "RUB")
-        return round(value * RUB_USD * 100) / 100;
+        return (round(value * RUB_USD * 100)) / 100;
     if(currency == "BYN")
         return round(value * BYN_USD * 100) / 100;
     if(currency == "EUR")
