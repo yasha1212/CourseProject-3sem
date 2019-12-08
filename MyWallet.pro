@@ -14,13 +14,19 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    newwalletwindow.cpp
+    newwalletwindow.cpp \
+    walletwindow.cpp \
+    incomewindow.cpp
 
 HEADERS  += mainwindow.h \
-    newwalletwindow.h
+    newwalletwindow.h \
+    walletwindow.h \
+    incomewindow.h
 
 FORMS    += mainwindow.ui \
-    newwalletwindow.ui
+    newwalletwindow.ui \
+    walletwindow.ui \
+    incomewindow.ui
 
 RESOURCES += \
     images.qrc

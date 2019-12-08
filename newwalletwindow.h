@@ -3,6 +3,9 @@
 
 #include <QWidget>
 
+#define APP_NAME "MyWallet"
+#define DATE_FORMAT "d MMMM yyyy, hh:mm:ss"
+
 namespace Ui {
 class NewWalletWindow;
 }
@@ -23,6 +26,8 @@ private slots:
 
 private:
     Ui::NewWalletWindow *ui;
+    void closeEvent(QCloseEvent *event);
+    void addWallet();
 };
 
 #endif // NEWWALLETWINDOW_H
