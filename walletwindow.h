@@ -3,7 +3,6 @@
 
 #include <QWidget>
 #include "incomewindow.h"
-#include "consumptionwindow.h"
 
 #define APP_NAME "MyWallet"
 
@@ -31,14 +30,11 @@ private slots:
 
     void on_bSettings_clicked();
 
-    void on_bConsumption_clicked();
-
     void on_bIncome_clicked();
 
 private:
     Ui::WalletWindow *ui;
     IncomeWindow *incomeWindow;
-    ConsumptionWindow *consumptionWindow;
     void closeEvent(QCloseEvent *event);
     void showEvent(QShowEvent *event);
     void prepareDatabase();

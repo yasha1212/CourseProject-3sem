@@ -5,7 +5,7 @@
 #include <QCloseEvent>
 
 #define APP_NAME "MyWallet"
-#define DATE_FORMAT "d MMMM yyyy, hh:mm:ss"
+#define DATE_FORMAT "yyyy-MM-dd hh:mm:ss"
 
 namespace Ui {
 class IncomeWindow;

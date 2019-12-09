@@ -12,18 +12,15 @@ WalletWindow::WalletWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     incomeWindow = new IncomeWindow;
-    consumptionWindow = new ConsumptionWindow;
     connect(incomeWindow, &IncomeWindow::walletWindow, this, &WalletWindow::show);
     connect(incomeWindow, &IncomeWindow::walletWindow, this, &WalletWindow::prepareDatabase);
-    connect(consumptionWindow, &ConsumptionWindow::walletWindow, this, &WalletWindow::show);
-    connect(consumptionWindow, &ConsumptionWindow::walletWindow, this, &WalletWindow::prepareDatabase);
 }
 
 void WalletWindow::prepareDatabase()
 {
     QSqlQueryModel *model = new QSqlQueryModel;
     QSqlQuery query(QSqlDatabase::database("transactions_connection"));
-    query.prepare("SELECT category, type, value, currency, date FROM transactions WHERE id = ?");
+    query.prepare("SELECT category, type, value, currency, date FROM transactions WHERE id = ? ORDER BY dateTime(date) DESC");
     query.addBindValue(name);
     query.exec();
     model->setQuery(query);
@@ -86,15 +83,6 @@ void WalletWindow::on_bDelete_clicked()
 void WalletWindow::on_bSettings_clicked()
 {
     QMessageBox::information(0, APP_NAME, "Settings button was pressed!");
-}
-
-void WalletWindow::on_bConsumption_clicked()
-{
-    consumptionWindow->currency = currency;
-    consumptionWindow->id = name;
-    consumptionWindow->value = value;
-    consumptionWindow->show();
-    this->hide();
 }
 
 void WalletWindow::on_bIncome_clicked()

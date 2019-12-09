@@ -42,9 +42,11 @@ void IncomeWindow::addIncome()
     query.prepare("INSERT INTO transactions(id, type, value, currency, date, category)"
                   "VALUES (:id, :type, :value, :currency, :date, :category)");
     query.bindValue(":id", id);
-    query.bindValue(":type", "income");
-    QString sign = ui->value->value() < 0? "": "+";
-    query.bindValue(":value", sign + QString::number(ui->value->value()));
+    double incomeValue = ui->value->value();
+    QString type = incomeValue < 0? "Consumption": "Income";
+    query.bindValue(":type", type);
+    QString sign = incomeValue < 0? "": "+";
+    query.bindValue(":value", sign + QString::number(incomeValue, 'f', 2));
     query.bindValue(":currency", currency);
     query.bindValue(":category", ui->categories->currentText());
     QString dateTime = QLocale{QLocale::English}.toString(QDateTime::currentDateTime(), DATE_FORMAT);
@@ -55,10 +57,9 @@ void IncomeWindow::addIncome()
     queryUpdate.prepare("UPDATE wallets SET value = :value WHERE id = :id");
     queryUpdate.bindValue(":id", id);
     double oldValue = value.toDouble();
-    double incomeValue = ui->value->value();
     double resultValue = oldValue + incomeValue;
     sign = resultValue < 0? "": "+";
-    queryUpdate.bindValue(":value", sign + QString::number(resultValue));
+    queryUpdate.bindValue(":value", sign + QString::number(resultValue, 'f', 2));
     queryUpdate.exec();
 }
 

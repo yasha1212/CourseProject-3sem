@@ -16,20 +16,17 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     newwalletwindow.cpp \
     walletwindow.cpp \
-    incomewindow.cpp \
-    consumptionwindow.cpp
+    incomewindow.cpp
 
 HEADERS  += mainwindow.h \
     newwalletwindow.h \
     walletwindow.h \
-    incomewindow.h \
-    consumptionwindow.h
+    incomewindow.h
 
 FORMS    += mainwindow.ui \
     newwalletwindow.ui \
     walletwindow.ui \
-    incomewindow.ui \
-    consumptionwindow.ui
+    incomewindow.ui
 
 RESOURCES += \
     images.qrc
