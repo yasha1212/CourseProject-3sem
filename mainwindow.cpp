@@ -1,55 +1,29 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "QtSql/QSqlDatabase"
-#include "QtSql/QSqlQuery"
 #include <QMessageBox>
 #include <sstream>
+#include <QStringListModel>
+#include "QtSql/QSqlQuery"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     this->setWindowFlags(Qt::CustomizeWindowHint);
-    setFixedSize(902, 542);
+    setFixedSize(WINDOW_SIZE_WIDTH, WINDOW_SIZE_HEIGHT);
     ui->setupUi(this);
+
     newWalletWindow = new(NewWalletWindow);
     walletWindow = new(WalletWindow);
+    model = new(MainWinModel);
+
     connect(newWalletWindow, &NewWalletWindow::firstWindow, this, &MainWindow::show);
     connect(newWalletWindow, &NewWalletWindow::firstWindow, this, &MainWindow::prepareDatabase);
     connect(walletWindow, &WalletWindow::firstWindow, this, &MainWindow::show);
     connect(walletWindow, &WalletWindow::firstWindow, this, &MainWindow::prepareDatabase);
+
+    model->setCurrency("BYN");
     prepareDatabase();
-}
-
-QString prepareTotalValue(QString str)
-{
-    QString result = "";
-    int counter = 0;
-    for(int i = str.count() - 1; i > -1; i--)
-    {
-        if(++counter % 4 == 0)
-        {
-            result = str[i] + "," + result;
-            counter = 1;
-        }
-        else
-            result = str[i] + result;
-    }
-    return result;
-}
-
-double convertToDollar(double value, QString currency)
-{
-    if(currency == "USD")
-        return value;
-    if(currency == "RUB")
-        return (round(value * RUB_USD * 100)) / 100;
-    if(currency == "BYN")
-        return round(value * BYN_USD * 100) / 100;
-    if(currency == "EUR")
-        return round(value * EUR_USD * 100) / 100;
-    if(currency == "LKR")
-        return round(value * LKR_USD * 100) / 100;
 }
 
 void MainWindow::prepareDatabase()
@@ -58,10 +32,11 @@ void MainWindow::prepareDatabase()
     QStringListModel *sListModel = new QStringListModel;
     QStringList sList;
     QSqlQuery query(QSqlDatabase::database("wallets_connection"));
-    query.exec("SELECT id, date, currency, value FROM wallets");
+    query.exec("SELECT id, date, inclusion, currency, value FROM wallets");
     while(query.next())
     {
-        sum += convertToDollar(query.value(3).toDouble(), query.value(2).toString());
+        if(query.value(2) == "yes")
+            sum += model->convertToMainCurrency(query.value(4).toDouble(), query.value(3).toString());
         sList.append(query.value(0).toString());
     }
     if((sum > TOTAL_MAX) || (sum < TOTAL_MIN))
@@ -73,14 +48,15 @@ void MainWindow::prepareDatabase()
         ui->bStats->setEnabled(false);
         ui->list->setEnabled(false);
         ui->laTotal->setEnabled(false);
-        ui->laTotal->setText("0 $");
+        ui->laTotal->setText("0 " + model->getCurrency());
     }
     else
     {
         std::ostringstream strs;
         strs << sum;
         std::string sumStr = strs.str();
-        ui->laTotal->setText(QString::fromStdString(sumStr.append(" $")));
+        std::string appendStr = " " + model->getCurrency().toStdString();
+        ui->laTotal->setText(QString::fromStdString(sumStr.append(appendStr)));
         sListModel->setStringList(sList);
         ui->list->setModel(sListModel);
     }
@@ -98,24 +74,17 @@ void MainWindow::on_bClose_clicked()
 
 void MainWindow::on_bAdd_clicked()
 {
-    QSqlQuery query(QSqlDatabase::database("wallets_connection"));
-    query.exec("SELECT COUNT(*) FROM wallets");
-    int rows = 0;
-    if(query.next())
-        rows = query.value(0).toInt();
-    if(rows < 12)
+    if(model->isReadyForAdding())
     {
         newWalletWindow->show();
         this->close();
     }
-    else
-        QMessageBox::warning(0, APP_NAME, "Maximal amount of wallets is 12!");
 }
 
 void MainWindow::on_list_clicked(const QModelIndex &index)
 {
-    QString name = ui->list->model()->data(index).toString();
-    walletWindow->name = name;
+    QString walletName = ui->list->model()->data(index).toString();
+    walletWindow->name = walletName;
     walletWindow->show();
     this->close();
 }

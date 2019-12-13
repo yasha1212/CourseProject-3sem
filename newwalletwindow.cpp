@@ -12,11 +12,14 @@ NewWalletWindow::NewWalletWindow(QWidget *parent) :
     ui(new Ui::NewWalletWindow)
 {
     ui->setupUi(this);
-    ui->cbCurrency->addItem("RUB");
-    ui->cbCurrency->addItem("EUR");
-    ui->cbCurrency->addItem("USD");
-    ui->cbCurrency->addItem("BYN");
-    ui->cbCurrency->addItem("LKR");
+    QSqlQuery query(QSqlDatabase::database("currencies_connection"));
+    query.exec("SELECT id FROM currencies");
+    while(query.next())
+    {
+        ui->cbCurrency->addItem(query.value(0).toString());
+    }
+    ui->cbInclusion->addItem("Include in total");
+    ui->cbInclusion->addItem("Don't include in total");
 }
 
 NewWalletWindow::~NewWalletWindow()
@@ -37,18 +40,26 @@ bool isCorrectName(QString name)
 void NewWalletWindow::addWallet()
 {
     QString currency = ui->cbCurrency->currentText();
+    QString inclusion = ui->cbInclusion->currentText();
     if(currency.count() != 0)
     {
-        QSqlQuery query(QSqlDatabase::database("wallets_connection"));
-        query.prepare("INSERT INTO wallets (id, date, currency, value)"
-                      "VALUES (:id, :date, :currency, :value)");
-        query.bindValue(":id", ui->eName->text());
-        QString dateTime = QLocale{QLocale::English}.toString(QDateTime::currentDateTime(), DATE_FORMAT);
-        query.bindValue(":date", dateTime);
-        query.bindValue(":currency", currency);
-        QString sign = ui->value->value() < 0? "": "+";
-        query.bindValue(":value", sign + QString::number(ui->value->value()));
-        query.exec();
+        if(inclusion.count() != 0)
+        {
+            inclusion = inclusion == "Include in total"? "yes": "no";
+            QSqlQuery query(QSqlDatabase::database("wallets_connection"));
+            query.prepare("INSERT INTO wallets (id, date, inclusion, currency, value)"
+                          "VALUES (:id, :date, :inclusion, :currency, :value)");
+            query.bindValue(":id", ui->eName->text());
+            QString dateTime = QLocale{QLocale::English}.toString(QDateTime::currentDateTime(), DATE_FORMAT);
+            query.bindValue(":date", dateTime);
+            query.bindValue(":inclusion", inclusion);
+            query.bindValue(":currency", currency);
+            QString sign = ui->value->value() < 0? "": "+";
+            query.bindValue(":value", sign + QString::number(ui->value->value(), 'f', 2));
+            query.exec();
+        }
+        else
+            QMessageBox::warning(0, APP_NAME, "Inclusion option must be selected!");
     }
     else
         QMessageBox::warning(0, APP_NAME, "Currency must be selected!");

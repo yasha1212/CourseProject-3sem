@@ -5,14 +5,10 @@
 #include <QtGui>
 #include "newwalletwindow.h"
 #include "walletwindow.h"
+#include "mainwinmodel.h"
 
-#define TOTAL_MAX 9999999999
-#define TOTAL_MIN -9999999999
-#define APP_NAME "MyWallet"
-#define EUR_USD 1.1059
-#define LKR_USD 0.0055
-#define BYN_USD 0.4723
-#define RUB_USD 0.0157
+#define WINDOW_SIZE_WIDTH 902
+#define WINDOW_SIZE_HEIGHT 542
 
 namespace Ui {
 class MainWindow;
@@ -41,7 +37,9 @@ private:
     Ui::MainWindow *ui;
     NewWalletWindow *newWalletWindow;
     WalletWindow *walletWindow;
+    MainWinModel *model;
     void prepareDatabase();
+    double convertToMainCurrency(double value, QString walletCurrency);
 };
 
 #endif // MAINWINDOW_H

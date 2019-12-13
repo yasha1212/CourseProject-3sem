@@ -16,12 +16,16 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     newwalletwindow.cpp \
     walletwindow.cpp \
-    incomewindow.cpp
+    incomewindow.cpp \
+    dbconnection.cpp \
+    mainwinmodel.cpp
 
 HEADERS  += mainwindow.h \
     newwalletwindow.h \
     walletwindow.h \
-    incomewindow.h
+    incomewindow.h \
+    dbconnection.h \
+    mainwinmodel.h
 
 FORMS    += mainwindow.ui \
     newwalletwindow.ui \
