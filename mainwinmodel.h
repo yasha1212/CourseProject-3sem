@@ -15,6 +15,8 @@ public:
     void setCurrency(QString currency);
     QString getCurrency();
     double convertToMainCurrency(double value, QString walletCurrency);
+    double getSum();
+    QStringList getWalletsList();
 private:
     QString currency;
 };

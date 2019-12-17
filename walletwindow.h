@@ -3,6 +3,8 @@
 
 #include <QWidget>
 #include "incomewindow.h"
+#include "walletsettingswindow.h"
+#include "walletwinmodel.h"
 
 #define APP_NAME "MyWallet"
 
@@ -25,6 +27,9 @@ public:
 signals:
     void firstWindow();
 
+public slots:
+    void setName(QString newName);
+
 private slots:
     void on_bDelete_clicked();
 
@@ -35,9 +40,11 @@ private slots:
 private:
     Ui::WalletWindow *ui;
     IncomeWindow *incomeWindow;
+    WalletSettingsWindow *walletSettingsWindow;
+    WalletWinModel *model;
     void closeEvent(QCloseEvent *event);
     void showEvent(QShowEvent *event);
-    void prepareDatabase();
+    void prepareTable();
 };
 
 #endif // WALLETWINDOW_H

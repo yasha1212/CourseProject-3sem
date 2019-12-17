@@ -1,11 +1,9 @@
 #ifndef INCOMEWINDOW_H
 #define INCOMEWINDOW_H
 
+#include "incomewinmodel.h"
 #include <QWidget>
 #include <QCloseEvent>
-
-#define APP_NAME "MyWallet"
-#define DATE_FORMAT "yyyy-MM-dd hh:mm:ss"
 
 namespace Ui {
 class IncomeWindow;
@@ -30,8 +28,8 @@ private slots:
 
 private:
     Ui::IncomeWindow *ui;
+    IncomeWinModel *model;
     void closeEvent(QCloseEvent *event);
-    void addIncome();
     void showEvent(QShowEvent *event);
 };
 

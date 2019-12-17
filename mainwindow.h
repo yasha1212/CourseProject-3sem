@@ -38,8 +38,7 @@ private:
     NewWalletWindow *newWalletWindow;
     WalletWindow *walletWindow;
     MainWinModel *model;
-    void prepareDatabase();
-    double convertToMainCurrency(double value, QString walletCurrency);
+    void prepareWindow();
 };
 
 #endif // MAINWINDOW_H

@@ -1,7 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QMessageBox>
-#include <sstream>
 #include <QStringListModel>
 #include "QtSql/QSqlQuery"
 
@@ -18,27 +17,19 @@ MainWindow::MainWindow(QWidget *parent) :
     model = new(MainWinModel);
 
     connect(newWalletWindow, &NewWalletWindow::firstWindow, this, &MainWindow::show);
-    connect(newWalletWindow, &NewWalletWindow::firstWindow, this, &MainWindow::prepareDatabase);
+    connect(newWalletWindow, &NewWalletWindow::firstWindow, this, &MainWindow::prepareWindow);
     connect(walletWindow, &WalletWindow::firstWindow, this, &MainWindow::show);
-    connect(walletWindow, &WalletWindow::firstWindow, this, &MainWindow::prepareDatabase);
+    connect(walletWindow, &WalletWindow::firstWindow, this, &MainWindow::prepareWindow);
 
     model->setCurrency("BYN");
-    prepareDatabase();
+    prepareWindow();
 }
 
-void MainWindow::prepareDatabase()
+void MainWindow::prepareWindow()
 {
-    double sum = 0;
+    double sum = model->getSum();
+    QStringList sList = model->getWalletsList();
     QStringListModel *sListModel = new QStringListModel;
-    QStringList sList;
-    QSqlQuery query(QSqlDatabase::database("wallets_connection"));
-    query.exec("SELECT id, date, inclusion, currency, value FROM wallets");
-    while(query.next())
-    {
-        if(query.value(2) == "yes")
-            sum += model->convertToMainCurrency(query.value(4).toDouble(), query.value(3).toString());
-        sList.append(query.value(0).toString());
-    }
     if((sum > TOTAL_MAX) || (sum < TOTAL_MIN))
     {
         QMessageBox::warning(0, APP_NAME, "Total sum is out of range!\nApp can work incorrectly!"
@@ -52,11 +43,8 @@ void MainWindow::prepareDatabase()
     }
     else
     {
-        std::ostringstream strs;
-        strs << sum;
-        std::string sumStr = strs.str();
-        std::string appendStr = " " + model->getCurrency().toStdString();
-        ui->laTotal->setText(QString::fromStdString(sumStr.append(appendStr)));
+        QString strSum = QString::number(sum, 'f', 2) + " " + model->getCurrency();
+        ui->laTotal->setText(strSum);
         sListModel->setStringList(sList);
         ui->list->setModel(sListModel);
     }

@@ -9,7 +9,6 @@ DBConnection::DBConnection()
 
 bool DBConnection::createConnection(QString id)
 {
-    QSqlDatabase db;
     if(!(db.contains("qt_sql_default_connection")))
         db = QSqlDatabase::addDatabase("QSQLITE", id + "_connection");
     db.setDatabaseName(id + ".sqlite");

@@ -31,6 +31,27 @@ double MainWinModel::convertToMainCurrency(double value, QString walletCurrency)
     }
 }
 
+double MainWinModel::getSum()
+{
+    double sum = 0;
+    QSqlQuery query(QSqlDatabase::database("wallets_connection"));
+    query.exec("SELECT id, date, inclusion, currency, value FROM wallets");
+    while(query.next())
+        if(query.value(2) == "yes")
+            sum += convertToMainCurrency(query.value(4).toDouble(), query.value(3).toString());
+    return sum;
+}
+
+QStringList MainWinModel::getWalletsList()
+{
+    QStringList sList;
+    QSqlQuery query(QSqlDatabase::database("wallets_connection"));
+    query.exec("SELECT id, date, inclusion, currency, value FROM wallets");
+    while(query.next())
+        sList.append(query.value(0).toString());
+    return sList;
+}
+
 bool MainWinModel::isReadyForAdding()
 {
     QSqlQuery query(QSqlDatabase::database("wallets_connection"));

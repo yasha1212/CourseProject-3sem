@@ -12,44 +12,36 @@ WalletWindow::WalletWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     incomeWindow = new IncomeWindow;
+    walletSettingsWindow = new WalletSettingsWindow;
+    model = new WalletWinModel;
+
     connect(incomeWindow, &IncomeWindow::walletWindow, this, &WalletWindow::show);
-    connect(incomeWindow, &IncomeWindow::walletWindow, this, &WalletWindow::prepareDatabase);
+    connect(walletSettingsWindow, SIGNAL(walletWindow(QString)), this, SLOT(setName(QString)));
 }
 
-void WalletWindow::prepareDatabase()
+void WalletWindow::setName(QString newName)
 {
-    QSqlQueryModel *model = new QSqlQueryModel;
-    QSqlQuery query(QSqlDatabase::database("transactions_connection"));
-    query.prepare("SELECT category, type, value, currency, date FROM transactions WHERE id = ? ORDER BY dateTime(date) DESC");
-    query.addBindValue(name);
-    query.exec();
-    model->setQuery(query);
-    model->setHeaderData(0, Qt::Horizontal, QObject::tr("Category"));
-    model->setHeaderData(1, Qt::Horizontal, QObject::tr("Type"));
-    model->setHeaderData(2, Qt::Horizontal, QObject::tr("Value"));
-    model->setHeaderData(3, Qt::Horizontal, QObject::tr("Currency"));
-    model->setHeaderData(4, Qt::Horizontal, QObject::tr("Date"));
-    ui->transactions->setModel(model);
+    name = newName;
+    this->show();
+}
+
+void WalletWindow::prepareTable()
+{
+    ui->transactions->setModel(model->getQueryModel());
     ui->transactions->resizeColumnsToContents();
 }
 
 void WalletWindow::showEvent(QShowEvent *event)
 {
     event->accept();
-    QSqlQuery query(QSqlDatabase::database("wallets_connection"));
-    query.exec("SELECT id, date, currency, value FROM wallets WHERE id = ?");
-    query.addBindValue(name);
-    query.exec();
-    while(query.next())
-    {
-        date = query.value(1).toString();
-        currency = query.value(2).toString();
-        value = query.value(3).toString();
-        ui->laDate->setText(date);
-        ui->laName->setText(name);
-        ui->laValue->setText(value + " " + currency);
-        prepareDatabase();
-    }
+    model->setName(name);
+    date = model->getParameter("date");
+    currency = model->getParameter("currency");
+    value = model->getParameter("value");
+    ui->laDate->setText(date);
+    ui->laName->setText(name);
+    ui->laValue->setText(value + " " + currency);
+    prepareTable();
 }
 
 WalletWindow::~WalletWindow()
@@ -68,21 +60,17 @@ void WalletWindow::closeEvent(QCloseEvent *event)
 
 void WalletWindow::on_bDelete_clicked()
 {
-    QSqlQuery query(QSqlDatabase::database("wallets_connection"));
-    query.prepare("DELETE FROM wallets WHERE id = ?");
-    query.addBindValue(name);
-    query.exec();
-
-    QSqlQuery queryTransactions(QSqlDatabase::database("transactions_connection"));
-    queryTransactions.prepare("DELETE FROM transactions WHERE id = ?");
-    queryTransactions.addBindValue(name);
-    queryTransactions.exec();
+    model->deleteWallet();
     this->close();
 }
 
 void WalletWindow::on_bSettings_clicked()
 {
-    QMessageBox::information(0, APP_NAME, "Settings button was pressed!");
+    walletSettingsWindow->currency = currency;
+    walletSettingsWindow->name = name;
+    walletSettingsWindow->inclusion = model->getParameter("inclusion");
+    walletSettingsWindow->show();
+    this->hide();
 }
 
 void WalletWindow::on_bIncome_clicked()
