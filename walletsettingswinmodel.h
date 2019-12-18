@@ -10,7 +10,7 @@ class WalletSettingsWinModel
 public:
     WalletSettingsWinModel();
     void setInclusion(QString inclusion);
-    void setName(QString newName);
+    bool setName(QString newName);
     void setCurrency(QString currency);
     QString name;
     QStringList getCurrenciesList();

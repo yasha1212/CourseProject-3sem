@@ -56,19 +56,9 @@ void IncomeWinModel::setParameters(QString currency, QString id, QString value)
 QStringList IncomeWinModel::getCategories()
 {
     QStringList list;
-    list.append("Clothes");
-    list.append("Food");
-    list.append("Transport");
-    list.append("Salary");
-    list.append("Sport");
-    list.append("Work");
-    list.append("Car");
-    list.append("Banks");
-    list.append("Travelling");
-    list.append("Rent");
-    list.append("Taxes");
-    list.append("Entertainment");
-    list.append("Health");
-    list.append("Other");
+    QSqlQuery query(QSqlDatabase::database("categories_connection"));
+    query.exec("SELECT id FROM categories");
+    while(query.next())
+        list.append(query.value(0).toString());
     return list;
 }

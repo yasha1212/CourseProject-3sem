@@ -70,8 +70,15 @@ bool MainWinModel::isReadyForAdding()
     }
 }
 
-void MainWinModel::setCurrency(QString currency)
+void MainWinModel::setCurrency()
 {
+    QString currency;
+    QSqlQuery query(QSqlDatabase::database("currencies_connection"));
+    query.prepare("SELECT id FROM currencies WHERE isMain = ?");
+    query.addBindValue("yes");
+    query.exec();
+    while(query.next())
+        currency = query.value(0).toString();
     this->currency = currency;
 }
 

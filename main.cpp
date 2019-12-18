@@ -10,6 +10,7 @@ int main(int argc, char *argv[])
     model->createConnection("wallets");
     model->createConnection("transactions");
     model->createConnection("currencies");
+    model->createConnection("categories");
     model->configureTables();
 
     MainWindow w;

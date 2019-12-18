@@ -14,19 +14,22 @@ MainWindow::MainWindow(QWidget *parent) :
 
     newWalletWindow = new(NewWalletWindow);
     walletWindow = new(WalletWindow);
+    settingsWindow = new(SettingsWindow);
     model = new(MainWinModel);
 
     connect(newWalletWindow, &NewWalletWindow::firstWindow, this, &MainWindow::show);
     connect(newWalletWindow, &NewWalletWindow::firstWindow, this, &MainWindow::prepareWindow);
+    connect(settingsWindow, &SettingsWindow::firstWindow, this, &MainWindow::show);
+    connect(settingsWindow, &SettingsWindow::firstWindow, this, &MainWindow::prepareWindow);
     connect(walletWindow, &WalletWindow::firstWindow, this, &MainWindow::show);
     connect(walletWindow, &WalletWindow::firstWindow, this, &MainWindow::prepareWindow);
 
-    model->setCurrency("BYN");
     prepareWindow();
 }
 
 void MainWindow::prepareWindow()
 {
+    model->setCurrency();
     double sum = model->getSum();
     QStringList sList = model->getWalletsList();
     QStringListModel *sListModel = new QStringListModel;
@@ -79,7 +82,8 @@ void MainWindow::on_list_clicked(const QModelIndex &index)
 
 void MainWindow::on_bSettings_clicked()
 {
-    QMessageBox::information(0, APP_NAME, "Settings button was clicked!");
+    settingsWindow->show();
+    this->close();
 }
 
 void MainWindow::on_bStats_clicked()

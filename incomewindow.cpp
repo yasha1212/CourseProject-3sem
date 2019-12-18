@@ -7,14 +7,14 @@ IncomeWindow::IncomeWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     model = new IncomeWinModel;
-
-    ui->categories->addItems(model->getCategories());
 }
 
 void IncomeWindow::showEvent(QShowEvent *event)
 {
     event->accept();
     ui->value->setSuffix(" " + currency);
+    ui->categories->clear();
+    ui->categories->addItems(model->getCategories());
 }
 
 IncomeWindow::~IncomeWindow()

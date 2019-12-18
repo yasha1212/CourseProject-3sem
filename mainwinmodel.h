@@ -12,7 +12,7 @@ class MainWinModel
 public:
     MainWinModel();
     bool isReadyForAdding();
-    void setCurrency(QString currency);
+    void setCurrency();
     QString getCurrency();
     double convertToMainCurrency(double value, QString walletCurrency);
     double getSum();

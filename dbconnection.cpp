@@ -33,7 +33,8 @@ void DBConnection::configureTables()
     currenciesQuery.exec("CREATE table currencies"
                "(id text,"
                "toUSD text,"
-               "fromUSD text)");
+               "fromUSD text,"
+               "isMain text)");
     QSqlQuery secondQuery(QSqlDatabase::database("transactions_connection"));
     secondQuery.exec("CREATE TABLE transactions"
                "(id text,"
@@ -42,4 +43,7 @@ void DBConnection::configureTables()
                "currency text,"
                "date text,"
                "category text)");
+    QSqlQuery categoriesQuery(QSqlDatabase::database("categories_connection"));
+    categoriesQuery.exec("CREATE TABLE categories"
+                         "(id text)");
 }

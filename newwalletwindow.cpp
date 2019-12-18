@@ -12,7 +12,6 @@ NewWalletWindow::NewWalletWindow(QWidget *parent) :
     ui->setupUi(this);
     model = new NewWalletWinModel;
 
-    ui->cbCurrency->addItems(model->getCurrenciesList());
     ui->cbInclusion->addItem("Include in total");
     ui->cbInclusion->addItem("Don't include in total");
 }
@@ -20,6 +19,13 @@ NewWalletWindow::NewWalletWindow(QWidget *parent) :
 NewWalletWindow::~NewWalletWindow()
 {
     delete ui;
+}
+
+void NewWalletWindow::showEvent(QShowEvent *event)
+{
+    event->accept();
+    ui->cbCurrency->clear();
+    ui->cbCurrency->addItems(model->getCurrenciesList());
 }
 
 void NewWalletWindow::on_bCreate_clicked()

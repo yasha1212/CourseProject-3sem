@@ -5,6 +5,7 @@
 #include <QtGui>
 #include "newwalletwindow.h"
 #include "walletwindow.h"
+#include "settingswindow.h"
 #include "mainwinmodel.h"
 
 #define WINDOW_SIZE_WIDTH 902
@@ -37,6 +38,7 @@ private:
     Ui::MainWindow *ui;
     NewWalletWindow *newWalletWindow;
     WalletWindow *walletWindow;
+    SettingsWindow *settingsWindow;
     MainWinModel *model;
     void prepareWindow();
 };

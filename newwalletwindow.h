@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include "newwalletwinmodel.h"
+#include <QShowEvent>
 
 namespace Ui {
 class NewWalletWindow;
@@ -26,6 +27,7 @@ private:
     Ui::NewWalletWindow *ui;
     NewWalletWinModel *model;
     void closeEvent(QCloseEvent *event);
+    void showEvent(QShowEvent *event);
 };
 
 #endif // NEWWALLETWINDOW_H

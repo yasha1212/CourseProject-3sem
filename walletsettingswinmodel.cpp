@@ -81,7 +81,7 @@ void WalletSettingsWinModel::setCurrency(QString currency)
     query.exec();
 }
 
-void WalletSettingsWinModel::setName(QString newName)
+bool WalletSettingsWinModel::setName(QString newName)
 {
     if(newName.count() != 0)
     {
@@ -97,10 +97,12 @@ void WalletSettingsWinModel::setName(QString newName)
             queryTransactions.addBindValue(newName);
             queryTransactions.addBindValue(name);
             queryTransactions.exec();
+            return true;
         }
         else
             QMessageBox::warning(0, APP_NAME, "Name must be a unique identifier!");
     }
     else
         QMessageBox::warning(0, APP_NAME, "Name field must be filled!");
+    return false;
 }
