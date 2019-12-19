@@ -15,12 +15,15 @@ MainWindow::MainWindow(QWidget *parent) :
     newWalletWindow = new(NewWalletWindow);
     walletWindow = new(WalletWindow);
     settingsWindow = new(SettingsWindow);
+    statWindow = new(StatWindow);
     model = new(MainWinModel);
 
     connect(newWalletWindow, &NewWalletWindow::firstWindow, this, &MainWindow::show);
     connect(newWalletWindow, &NewWalletWindow::firstWindow, this, &MainWindow::prepareWindow);
     connect(settingsWindow, &SettingsWindow::firstWindow, this, &MainWindow::show);
     connect(settingsWindow, &SettingsWindow::firstWindow, this, &MainWindow::prepareWindow);
+    connect(statWindow, &StatWindow::firstWindow, this, &MainWindow::show);
+    connect(statWindow, &StatWindow::firstWindow, this, &MainWindow::prepareWindow);
     connect(walletWindow, &WalletWindow::firstWindow, this, &MainWindow::show);
     connect(walletWindow, &WalletWindow::firstWindow, this, &MainWindow::prepareWindow);
 
@@ -88,5 +91,6 @@ void MainWindow::on_bSettings_clicked()
 
 void MainWindow::on_bStats_clicked()
 {
-    QMessageBox::information(0, APP_NAME, "Statistics button was clicked!");
+    statWindow->show();
+    this->close();
 }

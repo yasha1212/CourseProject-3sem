@@ -6,6 +6,7 @@
 #include "newwalletwindow.h"
 #include "walletwindow.h"
 #include "settingswindow.h"
+#include "statwindow.h"
 #include "mainwinmodel.h"
 
 #define WINDOW_SIZE_WIDTH 902
@@ -39,6 +40,7 @@ private:
     NewWalletWindow *newWalletWindow;
     WalletWindow *walletWindow;
     SettingsWindow *settingsWindow;
+    StatWindow *statWindow;
     MainWinModel *model;
     void prepareWindow();
 };

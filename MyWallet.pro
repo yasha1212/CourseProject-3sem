@@ -28,7 +28,9 @@ SOURCES += main.cpp\
     settingswinmodel.cpp \
     currencieswindow.cpp \
     categorieswindow.cpp \
-    categoriesmodel.cpp
+    categoriesmodel.cpp \
+    statwindow.cpp \
+    statwinmodel.cpp
 
 HEADERS  += mainwindow.h \
     newwalletwindow.h \
@@ -45,7 +47,9 @@ HEADERS  += mainwindow.h \
     settingswinmodel.h \
     currencieswindow.h \
     categorieswindow.h \
-    categoriesmodel.h
+    categoriesmodel.h \
+    statwindow.h \
+    statwinmodel.h
 
 FORMS    += mainwindow.ui \
     newwalletwindow.ui \
@@ -54,7 +58,8 @@ FORMS    += mainwindow.ui \
     walletsettingswindow.ui \
     settingswindow.ui \
     currencieswindow.ui \
-    categorieswindow.ui
+    categorieswindow.ui \
+    statwindow.ui
 
 RESOURCES += \
     images.qrc
