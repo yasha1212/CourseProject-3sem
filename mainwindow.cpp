@@ -91,6 +91,7 @@ void MainWindow::on_bSettings_clicked()
 
 void MainWindow::on_bStats_clicked()
 {
+    statWindow->currency = model->getCurrency();
     statWindow->show();
     this->close();
 }
