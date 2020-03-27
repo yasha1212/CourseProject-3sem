@@ -1,2 +1,2 @@
-# MyWallet
-Course project for 3 semester
+# CourseProject-3sem
+MyWallet
